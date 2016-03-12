@@ -70,6 +70,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         }
     }
     
+    
+    private var options: BCOptions = BCOptions() {
+        didSet {
+            options.updateDefaults()
+            BCOptions.commit()
+        }
+    }
+    
     // MARK: - View Controller Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,9 +129,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     
     
     // MARK: - BCOptionsTableViewContollerDelegate
-    func dismissWithUpdateOptions() {
+    func dismissWithUpdateOptions(options: BCOptions?) {
         self.dismissViewControllerAnimated(true) { () -> Void in
-            print("Animation done")
+            if let options = options {
+                self.options = options
+            }
         }
     }
     
